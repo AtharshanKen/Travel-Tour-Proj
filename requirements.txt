@@ -1,8 +1,12 @@
-numpy>= 1.11.0
-scipy>=0.15.1
-scikit-learn==1.6.1
-matplotlib>=1.4.3
 pandas>=0.19
+numpy>= 1.11.0
+holidays==0.83
+scikit-learn>=1.6.1
+openmeteo_requests==1.7.4
+requests-cache==1.2.1
+retry-requests==2.0.0
 streamlit==1.50.0
 streamlit-folium==0.25.3
 folium==0.20.0
+plotly==6.4.0
+streamlit-plotly-events==0.0.6
