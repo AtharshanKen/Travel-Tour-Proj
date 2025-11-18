@@ -7,7 +7,6 @@ from datetime import date,timedelta,datetime
 from dateutil import parser
 import plotly.express as px
 from streamlit_plotly_events import plotly_events
-from googletrans import Translator
 
 from extra import ARIMA_MD,KNN_MD # Model Exc File
 
