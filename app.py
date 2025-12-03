@@ -7,7 +7,10 @@ import plotly.express as px
 
 from openai import OpenAI
 #Set key from secrets 
-client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
+api = os.environ.get("OPENAI_API_KEY")
+if api is None:
+    api = st.secrets["OPENAI_API_KEY"]
+client = OpenAI(api_key=api)
 
 # Used for Getting forecasting data from selected location 
 from Dest_Forecasting_Data_Get import Dest_Forecastig_Data_Get 
