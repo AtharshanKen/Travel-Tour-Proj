@@ -11,7 +11,7 @@ def KNN_MD(NewRCat:list,dfscomb:pd.DataFrame,loc_id:str)->pd.DataFrame:
     df = dfscomb.copy()
     df.loc[len(df)] = NewRCat # Adding to the end for label encoding
     df = df.reset_index(drop=True)
-    df = df[df['Location_ID'] != loc_id].reset_index(drop=True) # don't want to predict our self
+    # df = df[df['Location_ID'] != loc_id].reset_index(drop=True) # don't want to predict our self
     df1 = df.copy()
 
     # Encode categorical columns (except target)
@@ -49,7 +49,7 @@ def KNN_MD(NewRCat:list,dfscomb:pd.DataFrame,loc_id:str)->pd.DataFrame:
                         'Location_Name',
                         'Date'])
     scaler = StandardScaler() 
-    X = scaler.fit_transform(X)[-1]
+    X = scaler.fit_transform(X)[-1] # Takes the last row that was added
     
     # Predict and get all locations not the selected location, store as [rows in dfscomb] in Found
     yPD,yPI = knn_model.kneighbors([X])
@@ -57,8 +57,9 @@ def KNN_MD(NewRCat:list,dfscomb:pd.DataFrame,loc_id:str)->pd.DataFrame:
 
     for i in range(len(yPI[0])):
         idx = yPI[0,i]
-        Found.loc[len(Found)] = df.loc[idx]
+        if df['Location_ID'].loc[idx] != loc_id:
+            Found.loc[len(Found)] = df.loc[idx]
     
     # Keep the row found with lowest crowd
-    Found = Found.sort_values(by=['Avg_Daily_Pedestrian_Count'])
+    Found = Found.sort_values(by=['Avg_Daily_Pedestrian_Count']).reset_index(drop=True)
     return Found.loc[0]
